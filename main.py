@@ -3,6 +3,7 @@ import os
 from bs4 import BeautifulSoup
 import tkinter as tk
 from tkinter import Entry, Button, Label
+from tkinter.ttk import Progressbar
 
 def scraper(url, output_name):
     try:
@@ -21,11 +22,18 @@ def scraper(url, output_name):
         result_label.config(text=f"Scraping complete! {output_name} is now on your Desktop.")
     except requests.exceptions.RequestException as e:
         result_label.config(text=f"Error retrieving data: {e}. Please make sure you are only using a link to ao3")
+    except Exception as e:
+        result_label.config(text=str(e))
 
 def scrape_button_click():
     url = url_entry.get()
     output_name = output_name_entry.get()
-    scraper(url, output_name)
+    if not url.startswith("https://archiveofourown.org"):
+        result_label.config(text="Error: please enter a valid URL from ao3")
+    elif not output_name:
+        result_label.config(text="Error: please enter a file name")
+    else:
+        scraper(url, output_name)
 
 window = tk.Tk()
 window.title("AO3 Scraper")
@@ -45,5 +53,8 @@ scrape_button.pack()
 
 result_label = Label(window, text="")
 result_label.pack()
+
+progress_bar = Progressbar(window, orient="horizontal", length=200, mode="determinate")
+progress_bar.pack()
 
 window.mainloop()
