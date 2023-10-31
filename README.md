@@ -38,9 +38,6 @@ This Python-based tool allows you to easily download fanfictions from AO3, conve
 - pip
 - Amazon Kindle
 
-# Contributing
-Contributions are welcome! Please read the contributing guidelines before making any changes.
-
 # License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
