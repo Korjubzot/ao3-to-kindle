@@ -1,6 +1,16 @@
 import requests
 import os
 from bs4 import BeautifulSoup
+
+# PDF handling imports
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.pdfgen import canvas
+
+# UI imports
 import tkinter as tk
 from tkinter import Entry, Button, Label
 from tkinter.ttk import Progressbar
@@ -19,11 +29,26 @@ def scraper(url, output_name):
         with open(output_file, "w") as file:
             for fic in fics:
                 file.write(fic.text)
-        result_label.config(text=f"Scraping complete! {output_name} is now on your Desktop.")
+        pdf_output = os.path.join(desktop_path, output_name + '.pdf')
+        text_to_pdf(output_file, pdf_output)
+        os.remove(output_file)
+        result_label.config(text=f"Scraping complete! {pdf_output} is now on your Desktop.")
+
     except requests.exceptions.RequestException as e:
         result_label.config(text=f"Error retrieving data: {e}. Please make sure you are only using a link to ao3")
     except Exception as e:
         result_label.config(text=str(e))
+
+def text_to_pdf(input_file, output_file):
+    pdfmetrics.registerFont(TTFont("Arial", "arial.ttf"))
+    doc = SimpleDocTemplate(output_file, pagesize=letter)
+    styles = getSampleStyleSheet()
+    elements = []
+    with open(input_file, "r") as file:
+        for line in file:
+            elements.append(Paragraph(line, styles["Normal"]))
+
+    doc.build(elements)
 
 def scrape_button_click():
     url = url_entry.get()
