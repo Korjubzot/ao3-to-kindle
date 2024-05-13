@@ -8,8 +8,9 @@ This Python-based tool allows you to easily download fanfictions from AO3, conve
 
 # To Do
 
-- [ ] Sanitize inputs
+- [x] Sanitize inputs
 - [x] Convert HTML text to PDF output
+- [ ] Improve formatting and layout of output PDF
 - [ ] Allow for output location selection
 - [ ] Improve GUI and user-friendliness
 - [ ] Add email-to-Kindle support
