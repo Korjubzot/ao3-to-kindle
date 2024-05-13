@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 # UI imports
 import tkinter as tk
-from tkinter import Entry, Button, Label
+from tkinter import Entry, Button, Label, messagebox
 
 # PDF handling imports
 from reportlab.lib.pagesizes import letter
@@ -25,8 +25,7 @@ def scraper(fic_url, output_name):
         response = requests.get(fic_url)
         response.raise_for_status()
     except:
-        print("Error: Invalid URL or connection error.")
-        return
+        error_handler.config(text="Error: Invalid URL. Please use a valid AO3 link.")
     
     print(response.status_code)
     soup = BeautifulSoup(response.content, "html.parser")
@@ -112,5 +111,8 @@ scrape_button.pack()
 
 test_autofill_button = Button(window, text="Autofill Test (for bugfixing!)", command=autofill_test)
 test_autofill_button.pack()
+
+error_handler = Label(window, text="Errors will be displayed here.")
+error_handler.pack()
 
 window.mainloop()
