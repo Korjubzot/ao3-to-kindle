@@ -11,10 +11,10 @@ from reportlab.lib.styles import getSampleStyleSheet
 
 # UI imports
 import tkinter as tk
-from tkinter import Entry, Button, Label
+from tkinter import Entry, Button, Label, filedialog
 from tkinter.ttk import Progressbar
 
-def scraper(url, output_name):
+def scraper(url, output_name, pdf_output):
     try:
         response = requests.get(url)
         response.raise_for_status()
@@ -56,10 +56,19 @@ def scrape_button_click():
     output_name = output_name_entry.get()
     if not url.startswith("https://archiveofourown.org"):
         result_label.config(text="Error: please enter a valid URL from ao3")
-    elif not output_name:
+        return
+    if not output_name:
         result_label.config(text="Error: please enter a file name")
-    else:
-        scraper(url, output_name)
+        return
+    
+    output_dir = filedialog.askdirectory()
+    if not output_dir:
+        return
+    output_file = Path(output_dir) / f"{output_name}.txt"
+    pdf_output = Path(output_dir) / f"{output_name}.pdf"
+    result_label.config(text="Scraping...")
+    window.update()
+    scraper(url, output_file, pdf_output)
 
 # for testing purposes
 def test_autofill():
@@ -67,6 +76,8 @@ def test_autofill():
     output_name_entry.delete(0, tk.END)
     url_entry.insert(0, "https://archiveofourown.org/works/12345678")
     output_name_entry.insert(0, "test")
+
+
 
 window = tk.Tk()
 window.title("AO3 Scraper")
