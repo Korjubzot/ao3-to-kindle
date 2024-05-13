@@ -1,5 +1,5 @@
 import requests
-import os
+from pathlib import Path
 from bs4 import BeautifulSoup
 
 # PDF handling imports
@@ -23,14 +23,14 @@ def scraper(url, output_name):
         fics = soup.find_all("div", class_="userstuff")
         if not fics:
             raise Exception("Error: no data found. Did you copy the right link?")
-        desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-        output_file = os.path.join(desktop_path, output_name + '.txt')
+        desktop_path = Path.home() / "Desktop"
+        output_file = desktop_path / (output_name + '.txt')
         with open(output_file, "w") as file:
             for fic in fics:
                 file.write(fic.text)
-        pdf_output = os.path.join(desktop_path, output_name + '.pdf')
+        pdf_output = desktop_path / (output_name + '.pdf')
         text_to_pdf(output_file, pdf_output)
-        os.remove(output_file)
+        output_file.unlink()
         result_label.config(text=f"Scraping complete! {pdf_output} is now on your Desktop.")
 
     except requests.exceptions.RequestException as e:
@@ -39,6 +39,8 @@ def scraper(url, output_name):
         result_label.config(text=str(e))
 
 def text_to_pdf(input_file, output_file):
+    input_file = str(input_file)
+    output_file = str(output_file)
     pdfmetrics.registerFont(TTFont("Arial", "arial.ttf"))
     doc = SimpleDocTemplate(output_file, pagesize=letter)
     styles = getSampleStyleSheet()
