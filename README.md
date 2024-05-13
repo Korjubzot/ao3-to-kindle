@@ -8,14 +8,14 @@ This Python-based tool allows you to easily download fanfictions from AO3, conve
 
 # To Do
 
-[ ] Sanitize inputs
-[ ] Convert HTML text to PDF output
-[ ] Allow for output location selection
-[ ] Improve GUI and user-friendliness
-[ ] Add email-to-Kindle support
-[ ] Package as an executable for ease of use
-[ ] Improve scraping to allow user to pull multiple chapters at a time
-[ ] Build a testing suite
+- [ ] Sanitize inputs
+- [ ] Convert HTML text to PDF output
+- [ ] Allow for output location selection
+- [ ] Improve GUI and user-friendliness
+- [ ] Add email-to-Kindle support
+- [ ] Package as an executable for ease of use
+- [ ] Improve scraping to allow user to pull multiple chapters at a time
+- [ ] Build a testing suite
 
 # Installation
 
@@ -45,7 +45,7 @@ This Python-based tool allows you to easily download fanfictions from AO3, conve
     python main.py
 ```
 
-    On MacOS and Linux, use
+On MacOS and Linux, use
 
 ```bash
     python3 main.py
