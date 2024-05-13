@@ -39,10 +39,16 @@ This Python-based tool allows you to easily download fanfictions from AO3, conve
 
 # Usage
 
-1. Run the following command in the directory
+1. Run the script. On Windows, use:
 
 ```bash
     python main.py
+```
+
+    On MacOS and Linux, use
+
+```bash
+    python3 main.py
 ```
 
 2. Copy and paste the URL of the fic you want to download
