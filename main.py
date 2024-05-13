@@ -58,3 +58,8 @@ progress_bar = Progressbar(window, orient="horizontal", length=200, mode="determ
 progress_bar.pack()
 
 window.mainloop()
+
+# todo
+# fix the progress bar
+# validate filename input
+# push to pdf format
