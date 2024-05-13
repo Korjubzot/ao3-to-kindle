@@ -8,7 +8,6 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.pdfgen import canvas
 
 # UI imports
 import tkinter as tk
@@ -60,6 +59,13 @@ def scrape_button_click():
     else:
         scraper(url, output_name)
 
+# for testing purposes
+def test_autofill():
+    url_entry.delete(0, tk.END)
+    output_name_entry.delete(0, tk.END)
+    url_entry.insert(0, "https://archiveofourown.org/works/12345678")
+    output_name_entry.insert(0, "test")
+
 window = tk.Tk()
 window.title("AO3 Scraper")
 
@@ -75,6 +81,9 @@ output_name_entry.pack()
 
 scrape_button = Button(window, text="Scrape", command=scrape_button_click)
 scrape_button.pack()
+
+test_autofill_button = Button(window, text="Autofill (Bugtesting only!)", command=test_autofill)
+test_autofill_button.pack()
 
 result_label = Label(window, text="")
 result_label.pack()
